@@ -42,9 +42,8 @@ class GoogleController extends Controller
                 return redirect('/home');
      
             }else{
-                $newUser = User::create([
-                    'name' => $user->name,
-                    'email' => $user->email,
+                $newUser = User::updateOrCreate(['email' => $user->email,],[
+                    'name' => $user->name,             
                     'google_id'=> $user->id,
                     'password' => Hash::make('12345678')
                 ]);
