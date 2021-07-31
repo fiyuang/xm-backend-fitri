@@ -3,12 +3,9 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Profile extends Model
+class TrxIndustry extends Model
 {
-    use SoftDeletes;
-
     protected $guarded = [];
 
     public function user()

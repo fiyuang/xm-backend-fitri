@@ -15,9 +15,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password', 'google_id'
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -36,4 +34,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function profile()
+    {
+        return $this->hasOne('App\Profile');
+    }
+
+    public function trx_industry()
+    {
+        return $this->hasMany('App\TrxIndustry');
+    }
+
+    public function scopeHrOnly($query)
+    {
+        $query->where('user_type', 2);
+    }
+
+    public function scopeJobseekerOnly($query)
+    {
+        $query->where('user_type', 3);
+    }
 }

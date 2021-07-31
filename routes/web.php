@@ -31,7 +31,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::prefix('members')->group(function() {
-        
+        Route::get('/hr','MemberController@hr')->name('dashboard.hr');
+        Route::post('/store/hr','MemberController@create_hr')->name('hr.store');
+        Route::post('/delete/hr/{id}','MemberController@delete_hr')->name('hr.destroy');
     });
  
 });

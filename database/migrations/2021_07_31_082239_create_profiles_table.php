@@ -15,7 +15,7 @@ class CreateProfilesTable extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('gender')->nullable();
             $table->string('mobile_number')->unique();
             $table->date('date_of_birth')->nullable();
@@ -24,6 +24,8 @@ class CreateProfilesTable extends Migration
             $table->string('profile_picture')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
