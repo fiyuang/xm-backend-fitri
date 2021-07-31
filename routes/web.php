@@ -17,8 +17,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Route::get('login', 'Auth\LoginController@showFormLogin')->name('login');
+Route::post('login', 'Auth\LoginController@login');
 
-Route::get('/home', 'HomeController@index')->name('home');
 Route::get('auth/google', 'Auth\GoogleController@redirectToGoogle');
 Route::get('auth/google/callback', 'Auth\GoogleController@handleGoogleCallback');
+
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/home', 'HomeController@index')->name('home');
+
+    Route::get('/admin','DashboardController@index')->name('dashboard');
+    Route::get('logout', 'Auth\LoginController@logout')->name('logout');
+
+    Route::prefix('members')->group(function() {
+        
+    });
+ 
+});
