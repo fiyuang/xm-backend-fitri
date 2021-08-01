@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+
+Route::get('/hr-list','HRController@index')->name('frontend.hr-list');
 
 Route::get('login', 'Auth\LoginController@showFormLogin')->name('login');
 Route::post('login', 'Auth\LoginController@login');

@@ -36,7 +36,7 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-        @include('components/_sidebar')
+        @include('components/admin/_sidebar')
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -46,7 +46,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                @include('components/_navbar')
+                @include('components/admin/_navbar')
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
@@ -78,8 +78,8 @@
     </a>
 
     <!-- Logout Modal-->
-    @include('components/_logout')
-    @include('components/_delete_popup')
+    @include('components/admin/_logout')
+    @include('components/admin/_delete_popup')
 
     <!-- Bootstrap core JavaScript-->
     <script type="text/javascript" src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin.app')
 
 @section('content')
 <!-- Begin Page Content -->
@@ -49,7 +49,7 @@
 
 </div>
 
-@include('components/_detail_patient')
+@include('components/admin/_detail_patient')
 
 <!-- /.container-fluid -->
 @endsection
