@@ -67,6 +67,13 @@ class MemberController extends Controller
                     'industry_id' => $request->industries[$i]
                 ]);
             }
+
+            // Upload CV Document
+            if($request->hasFile('cv')){
+                $cv = $this->uploadCV($request->file('cv'), 1);
+                $checkCurrentCV = ['documentable_id' => $user->id, 'documentable_type' => 'App\User', 'type' => 1];
+                $user->uploadOrReplaceDocument($checkCurrentCV, $cv['file_name'], $cv['file_path'], 1);
+            }     
   
             \DB::commit();
 
@@ -81,6 +88,22 @@ class MemberController extends Controller
 
         return redirect()->back();
 
+    }
+
+    public function uploadCV($data, $type)
+    {
+        $filename = 'cv' . '-' . time() . '.' . $data->getClientOriginalExtension();
+        $path = public_path('documents/HR/CV');
+            if(!File::isDirectory($path)){
+                File::makeDirectory($path, 0777, true, true);
+            }
+        $filepath = 'documents/HR/CV/'.$filename;
+        $save = $data->move($path, $filename);
+
+        return [
+            'file_name' => $filename,
+            'file_path' => $filepath
+        ];
     }
 
     public function delete_hr($id)

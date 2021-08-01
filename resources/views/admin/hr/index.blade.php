@@ -109,6 +109,14 @@
                     </div>
 
                     <div class="form-group col">
+                        <label for="profile_picture">Upload CV</label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="cv" name="cv">
+                            <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group col">
                         <label for="industries">Industri</label>
                         <div class="custom-file">
                             <select class="js-example-basic-multiple form-control" name="industries[]" id="industries" multiple="multiple" style="width: 100%">
