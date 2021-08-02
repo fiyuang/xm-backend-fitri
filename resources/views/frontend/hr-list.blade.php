@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Shop Item - Start Bootstrap Template</title>
+        <title>Our HR - XM Fitri</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -84,9 +84,8 @@
                                         <span class="badge badge-info">{{ $industry->industry_name }}</span> &nbsp;&nbsp;&nbsp;
                                         @endforeach
                                     </div>
-                                    <!-- Product price-->
-                                    <span class="text-muted text-decoration-line-through">$20.00</span>
-                                    $18.00
+                                    
+                                    PT. Lorem Ipsum
                                 </div>
                             </div>
                             <!-- Product actions-->

@@ -15,7 +15,7 @@
             <h6 class="m-0 font-weight-bold text-primary">List HR</h6>
         </div>
         <div class="card-body">
-            <a href="" class="btn btn-success btn-sm float-right" data-toggle="modal" data-target="#form-doctor"
+            <a href="" class="btn btn-success btn-sm float-right" data-toggle="modal" data-target="#ModalFormHR"
                 style="margin-bottom: 20px;">
                 <i class="fa fa-plus"></i>&nbsp; &nbsp; Tambah HR
             </a>
@@ -55,7 +55,7 @@
 
 </div>
 
-<div class="modal fade" id="form-doctor" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ModalFormHR" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -64,10 +64,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('hr.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+            <form id="FormHR" name="FormHR">
                 <div class="modal-body">
-
+                    <div class="alert alert-danger" style="display:none"></div>
                     <div class="form-group col">
                         <label for="name">Nama HR</label>
                         <input type="text" name="name" id="name" class="form-control" value="" placeholder="Nama Lengkap">
@@ -109,7 +108,7 @@
                     </div>
 
                     <div class="form-group col">
-                        <label for="profile_picture">Upload CV</label>
+                        <label for="cv">Upload CV</label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="cv" name="cv">
                             <label class="custom-file-label" for="exampleInputFile">Choose file</label>
@@ -129,7 +128,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+                    <button type="submit" class="btn btn-primary btn-sm save-data">Simpan</button>
                 </div>
             </form>
         </div>
@@ -149,20 +148,6 @@
 @section('scripts')
 <script type="text/javascript" src="{{ asset('vendor/jquery-mask/jquery.mask.js') }}"></script>
 <script type="text/javascript" src="{{ asset('vendor/jquery-mask/jquery.mask.min.js') }}"></script>
-
-<script type="text/javascript">
-
-    function removeAction() {
-        $('[data-target="#remove-data-popup"]').on('click', function (e) {
-          $("#remove-data-popup form").attr("action", $(this).data('action'));
-        });
-    }
-
-    $(document).ready(function () {
-        removeAction();
-        $("#form-doctor [name=mobile_number]").mask('0000000000000', {reverse: true});
-        $('.js-example-basic-multiple').select2();
-    })
-
-</script>
+<script type="text/javascript" src="{{ asset('js/jquery.validate.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/custom/admin/hr.js') }}"></script>
 @endsection

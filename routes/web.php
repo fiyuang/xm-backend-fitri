@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
 
 Route::get('/hr-list','HRController@index')->name('frontend.hr-list');
 
@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/hr','MemberController@hr')->name('dashboard.hr');
         Route::post('/store/hr','MemberController@create_hr')->name('hr.store');
         Route::post('/delete/hr/{id}','MemberController@delete_hr')->name('hr.destroy');
+
+        Route::get('/jobseeker','MemberController@jobseekers')->name('dashboard.jobseeker');
     });
  
 });

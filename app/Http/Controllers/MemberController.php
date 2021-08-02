@@ -78,16 +78,19 @@ class MemberController extends Controller
             \DB::commit();
 
             if($user){
-                Alert::toast('Data berhasil disimpan', 'success')->padding('10px')->timerProgressBar();
+                return response()->json([
+                    'data' => $user,
+                    'success'=> 'Data berhasil disimpan'
+                ]);
             }
 
         } catch (\Exception $e){
             \DB::rollback();
-            Alert::toast($e->getMessage(), 'error')->padding('10px')->timerProgressBar();
+            return response()->json([
+                'data' => $user,
+                'success'=> 'Error'
+            ]);
         }
-
-        return redirect()->back();
-
     }
 
     public function uploadCV($data, $type)
