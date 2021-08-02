@@ -31,6 +31,25 @@ class MemberController extends Controller
 
     public function create_hr(Request $request)
     {
+        $validator = \Validator::make($request->all(), 
+            [
+              'profile_picture' => 'required|mimes:jpeg,jpg,png|max:5120',
+              'cv' => 'required|mimes:pdf|max:5120',
+            ], [
+              'profile_picture.mimes' => 'Format file profile picture tidak sesuai',
+              'profile_picture.max' => 'Ukuran file maksimal 5 Mb',
+              'cv.mimes' => 'Format file CV tidak sesuai',
+              'cv.max' => 'Ukuran file maksimal 5 Mb',
+            ]
+        );
+        
+        if ($validator->fails())
+        {
+            return response()->json([
+                'errors'=>$validator->errors()->all()
+            ]);
+        }
+
         \DB::beginTransaction();
         try {
 
