@@ -29,6 +29,12 @@ class MemberController extends Controller
         ]);
     }
 
+    public function detailHrJson($id)
+    {
+        $data = User::with('profile','cv','trx_industry')->where('id', $id)->first();
+        return response()->json($data);
+    }
+
     public function create_hr(Request $request)
     {
         $validator = \Validator::make($request->all(), 

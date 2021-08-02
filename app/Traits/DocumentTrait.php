@@ -29,7 +29,7 @@ trait DocumentTrait
     // CV User
     public function cv()
     {
-        return $this->morphOne(MemberFile::class, 'documentable')->where('type', 1);
+        return $this->morphOne(Document::class, 'documentable')->where('type', 1);
     }
 
 }

@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/hr','MemberController@hr')->name('dashboard.hr');
         Route::post('/store/hr','MemberController@create_hr')->name('hr.store');
         Route::post('/delete/hr/{id}','MemberController@delete_hr')->name('hr.destroy');
+        Route::get('/hr/{id}/json','MemberController@detailHrJson')->name('detail.hr');
 
         Route::get('/jobseeker','MemberController@jobseekers')->name('dashboard.jobseeker');
     });

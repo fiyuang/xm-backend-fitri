@@ -92,4 +92,18 @@ $(document).ready(function () {
             }
         });
     }
+
+    $('body').on('click', '.detail-hr', function () {
+        var id = $(this).data('id');
+        $.get('hr/' + id + '/json', function (data) {
+            // console.log(data)
+            var cv_path = "/"+data.cv.file_path;
+            $('.name').html(data.name);
+            $('.email').html(data.email);
+            $('.mobile_number').html(data.profile.mobile_number);
+            $(".cv").attr("href",cv_path);
+
+            $('#detail-hr').modal('show');
+        });
+    });
 })
