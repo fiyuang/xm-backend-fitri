@@ -12,7 +12,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Jadwal Periksa Gigi</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Jadwal</h6>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -20,27 +20,14 @@
                     <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Nama Pasien</th>
-                            <th>Dokter</th>
-                            <th>Tanggal Periksa</th>
-                            <th>Waktu Periksa</th>
-                            <th>Action</th>
+                            <th>Nama Guru</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @php $i = 1 @endphp
-                        @foreach ($schedules as $schedule)
                         <tr>
-                            <td>{{ $i++ }}</td>
-                            <td>{{ $schedule->patient->name }}</td>
-                            <td>{{ $schedule->doctor->name }}</td>
-                            <td>{{ $schedule->date }}</td>
-                            <td>{{ $schedule->time }}</td>
-                            <td><a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $schedule->id }}"
-                                    class="btn btn-primary btn-sm detail-patient ml-1"><i class="fas fa-eye fa-fw"></i>
-                                    Detail</a></td>
+                            <td>1</td>
+                            <td>Nama Panjang</td>
                         </tr>
-                        @endforeach
                     </tbody>
                 </table>
             </div>

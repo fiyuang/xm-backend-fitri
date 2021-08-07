@@ -15,12 +15,13 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('jobseeker_id');
-            $table->unsignedInteger('hr_id');
+            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('guru_id');
             $table->timestamp('schedule_time')->nullable();
             $table->string('notes')->nullable();
             $table->tinyInteger('is_approved')->nullable();
             $table->text('approved_reason')->nullable();
+            $table->tinyInteger('is_saved')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

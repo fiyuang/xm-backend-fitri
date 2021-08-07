@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Session;
 
 class RegisterController extends Controller
 {
@@ -21,21 +23,6 @@ class RegisterController extends Controller
     | provide this functionality without requiring any additional code.
     |
     */
-
-    use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
@@ -50,9 +37,8 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
     }
 
@@ -62,12 +48,49 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function register(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
+        $rules = [
+            'email'                  => 'required', 'string', 'email', 'max:255', 'unique:users',
+            'password'               => 'required', 'string', 'min:8'
+        ];
+  
+        $messages = [
+            'email.required'        => 'Email wajib diisi',
+            'password.required'     => 'Password wajib diisi',
+            'password.string'       => 'Password harus berupa string'
+        ];
+  
+        $validator = Validator::make($request->all(), $rules, $messages);
+  
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput($request->all);
+        }
+
+        $data = [
+            'email'      => $request->input('email'),
+            'password'   => $request->input('password'),
+        ];
+
+        User::create([
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'status' => 1 //Baru
         ]);
+
+        Auth::attempt($data);
+  
+        if (Auth::check()) {
+            //Login Success
+            return redirect()->route('complete.profile');
+        } else {
+            //Login Fail
+            Session::flash('error', 'Email atau password salah');
+            return redirect()->route('index');
+        }
+
+        // auth()->login($user);
+
+        // return redirect()->to('/complete-profile');
     }
 }

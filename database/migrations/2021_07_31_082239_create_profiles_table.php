@@ -19,7 +19,6 @@ class CreateProfilesTable extends Migration
             $table->string('gender')->nullable();
             $table->string('mobile_number')->unique();
             $table->date('date_of_birth')->nullable();
-            $table->string('place_of_birth')->nullable();
             $table->integer('education')->nullable()->comment('1 => SD, 2 => SMP, 3 => SMA, 4 => DIPLOMA, 5 => SARJANA');
             $table->string('profile_picture')->nullable();
             $table->timestamps();

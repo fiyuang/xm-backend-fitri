@@ -65,7 +65,7 @@
         <!-- Product section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 my-5">
-            <h2 class="fw-bolder mb-4" style="text-align: center;">HR Lists</h2><br>
+            <h2 class="fw-bolder mb-4" style="text-align: center;">Guru Lists</h2><br>
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-3 justify-content-center">
                     @php $i = 1 @endphp
                     @foreach ($hrs as $hr)
@@ -80,8 +80,8 @@
                                     <h5 class="fw-bolder">{{ $hr->name }}</h5>
                                     <!-- Product reviews-->
                                     <div class="d-flex justify-content-center small text-warning mb-2">
-                                        @foreach ($hr->trx_industry as $industry)
-                                        <span class="badge badge-info">{{ $industry->industry_name }}</span> &nbsp;&nbsp;&nbsp;
+                                        @foreach ($hr->trx_tag as $tag)
+                                        <span class="badge badge-info">{{ $tag->tag_name }}</span> &nbsp;&nbsp;&nbsp;
                                         @endforeach
                                     </div>
                                     

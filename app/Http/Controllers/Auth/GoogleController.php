@@ -38,20 +38,24 @@ class GoogleController extends Controller
             if($finduser){
      
                 Auth::login($finduser);
-    
-                return redirect('/home');
+
+                if ($finduser->status == 2 || $finduser->status == 3){
+                    return redirect('/guru-list');
+                } else {
+                    return redirect('/complete-profile');
+                }    
      
             }else{
                 $newUser = User::updateOrCreate(['email' => $user->email,],[
                     'name' => $user->name,             
                     'google_id'=> $user->id,
-                    'user_type' => 3,
+                    'status' => 1, //Baru
                     'password' => Hash::make('12345678')
                 ]);
     
                 Auth::login($newUser);
      
-                return redirect('/hr-list');
+                return redirect('/complete-profile');
             }
     
         } catch (Exception $e) {

@@ -17,15 +17,9 @@ class DashboardController extends Controller
     {
         $schedules = Schedule::orderBy('id', 'DESC')->get();
         // dd($schedules);
-        return view('dashboard.dashboard', [
-            'schedules' => $schedules
+        return view('admin.dashboard', [
+            // 'schedules' => $schedules
         ]);
-    }
-
-    public function detailPatientJson($id)
-    {
-        $data = Schedule::with('patient','doctor')->where('id', $id)->first();
-        return response()->json($data);
     }
 
     /**

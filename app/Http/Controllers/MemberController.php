@@ -4,35 +4,70 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\Industry;
+use App\Tag;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 use File;
 
 class MemberController extends Controller
 {
-    public function hr() //Index of HR
+    public function guru() //Index of HR
     {
-        $hrs = User::HrOnly()->orderBy('id', 'DESC')->get();
-        $industries = Industry::get();
+        $hrs = User::GuruOnly()->orderBy('id', 'DESC')->get();
+        $tags = Tag::get();
         return view('admin.hr.index', [
             'hrs' => $hrs,
-            'industries' => $industries
+            'tags' => $tags
         ]);
     }
 
-    public function jobseekers() //Index of Jobseekers
+    public function detailGuruJson($id)
     {
-        $jobseekers = User::jobseekerOnly()->orderBy('id', 'DESC')->get();
-        return view('admin.jobseeker.index', [
-            'jobseekers' => $jobseekers
-        ]);
-    }
-
-    public function detailHrJson($id)
-    {
-        $data = User::with('profile','cv','trx_industry')->where('id', $id)->first();
+        $data = User::with('profile','cv','trx_tag')->where('id', $id)->first();
         return response()->json($data);
+    }
+
+    public function detail($id)
+    {
+        $data = User::with('profile','cv','trx_tag')->where('id', $id)->first();
+        // return $data;
+        return view('admin.hr.detail', [
+            'data' => $data
+        ]);
+    }
+
+    public function update_status(Request $request)
+    {
+        $user = User::where('id', $request->id)->first();
+
+        \DB::beginTransaction();
+        try {
+            
+            $result = $user->update([
+                'status' => $request->status
+            ]);
+
+            if ($result) {
+                \DB::commit();
+                return response()->json([
+                    'message' => "Data berhasil diubah",
+                    'success'=> true
+                ]);
+            } else {
+                \DB::rollback();
+                return response()->json([
+                    'message' => $e->getMessage(),
+                    'success'=> false
+                ]);
+            }
+            
+        } catch (\Exception $e){
+            \DB::rollback();
+            return response()->json([
+                'message' => $e->getMessage(),
+                'success'=> false
+            ]);
+        }
     }
 
     public function create_hr(Request $request)
@@ -112,7 +147,7 @@ class MemberController extends Controller
         } catch (\Exception $e){
             \DB::rollback();
             return response()->json([
-                'data' => $user,
+                'message' => $e->getMessage(),
                 'success'=> 'Error'
             ]);
         }

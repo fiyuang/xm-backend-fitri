@@ -93,17 +93,53 @@ $(document).ready(function () {
         });
     }
 
-    $('body').on('click', '.detail-hr', function () {
+    $('#status').on('change',function(){
+        var status =  $( "select option:selected" ).val();
         var id = $(this).data('id');
-        $.get('hr/' + id + '/json', function (data) {
-            // console.log(data)
-            var cv_path = "/"+data.cv.file_path;
-            $('.name').html(data.name);
-            $('.email').html(data.email);
-            $('.mobile_number').html(data.profile.mobile_number);
-            $(".cv").attr("href",cv_path);
+        console.log(id);
+        Swal.fire({
+            title: 'Apa anda yakin?',
+            text: "Melakukan perubahan status pada data ini.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Lanjutkan!',
+            cancelButtonText: 'Batalkan',
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    url: '/admin/members/guru/update',
+                    type: 'POST',
+                    data: {
+                        id: id,
+                        status: status,
+                        _token: $('meta[name="csrf-token"]').attr('content')
+                    },
+                    success: function (data) {
+                        console.log(data)
+                        if(data.success == true){
+                            Swal.fire(
+                                'Berhasil!',
+                                'Status telah di perbarui!',
+                                'success'
+                            ).then(function(){ 
+                                location.reload();
+                            })
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: data.message,
+                                showConfirmButton: false,
+                                timer: 5500
+                            })
+                        }
+                    }
+                })
+            }
+        })
+    })
+        
 
-            $('#detail-hr').modal('show');
-        });
-    });
+    
 })

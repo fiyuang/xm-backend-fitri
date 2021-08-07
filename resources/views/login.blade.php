@@ -63,9 +63,9 @@
                     <div class="col-md-6" style="background-color: whitesmoke; border-radius: 30px;">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Register Your Account</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                             </div>
-                            <form method="POST" action="{{ route('register') }}" id="registerForm">
+                            <form method="POST" action="{{ route('login') }}" id="loginForm">
                                 @csrf
                                 @if(session('errors'))
                                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -91,14 +91,14 @@
                                     </div>
                                 @endif
                                 <div class="form-group">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter email..." required autocomplete="email" autofocus>
+                                    <input id="email" type="email" class="form-control @error('name') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="Enter email..." required autocomplete="email" autofocus>
                                 </div>
 
                                 <div class="form-group">
                                     <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Enter password..." required autocomplete="current-password">
                                 </div>
                                 <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Register
+                                    Login
                                 </button>
                                 <hr>
                                 <a href="{{ url('auth/google') }}" class="btn btn-google btn-user btn-block">
@@ -107,7 +107,7 @@
                             </form>
                             <hr>
                             <div class="text-center">
-                                <p class="small">Already have an account? <a href="/login"> Login here!</a></p>
+                                <a class="small" href="/"> Create Your Account</a>
                             </div>
                         </div>
                     </div>

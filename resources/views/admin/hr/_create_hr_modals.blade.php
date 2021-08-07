@@ -62,8 +62,8 @@
                         <label for="industries">Industri</label>
                         <div class="custom-file">
                             <select class="js-example-basic-multiple form-control" name="industries[]" id="industries" multiple="multiple" style="width: 100%">
-                                @foreach ($industries as $industry)
-                                <option value="{{ $industry->id }}"> {{ $industry->name }} </option>
+                                @foreach ($tags as $tag)
+                                <option value="{{ $tag->id }}"> {{ $tag->name }} </option>
                                 @endforeach
                             </select>
                         </div>

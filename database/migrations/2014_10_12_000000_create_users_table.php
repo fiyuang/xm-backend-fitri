@@ -17,10 +17,11 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('google_id')->nullable();
             $table->string('name')->nullable();
-            $table->tinyInteger('user_type')->nullable()->comment('1 => Admin, 2 => HR, 3 => Jobseeker')->nullable();
+            $table->tinyInteger('user_type')->nullable()->comment('1 => Admin, 2 => Guru, 3 => User')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->tinyInteger('status')->nullable()->comment('1 => Baru, 2 => Menunggu Direview, 3 => Approved, 4 => Ditolak')->nullable();
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();

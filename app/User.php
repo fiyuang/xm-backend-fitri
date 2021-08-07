@@ -41,17 +41,17 @@ class User extends Authenticatable
         return $this->hasOne('App\Profile');
     }
 
-    public function trx_industry()
+    public function trx_tag()
     {
-        return $this->hasMany('App\TrxIndustry');
+        return $this->hasMany('App\TrxTag');
     }
 
-    public function scopeHrOnly($query)
+    public function scopeGuruOnly($query)
     {
         $query->where('user_type', 2);
     }
 
-    public function scopeJobseekerOnly($query)
+    public function scopeUserOnly($query)
     {
         $query->where('user_type', 3);
     }
