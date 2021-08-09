@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->group(function() {
     // No Need Auth
-    Route::get('/login', 'Auth\LoginController@showFormLogin')->name('login');
+    Route::get('/login', 'Auth\LoginController@showFormLogin')->name('admin.login');
 
     // Need Auth
     Route::group(['middleware' => 'auth'], function () {
@@ -53,8 +53,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('/guru-list','HRController@index')->name('frontend.guru-list');
+    Route::post('/create-schedule','HRController@create_schedule')->name('frontend.create.schedule');
 
     Route::get('/complete-profile', 'ProfileController@index')->name('complete.profile');
     Route::post('/complete-profile', 'ProfileController@store')->name('complete.profile.store');
+    Route::get('/detail-profile/{id}', 'ProfileController@detail')->name('detail.profile');
 });
 

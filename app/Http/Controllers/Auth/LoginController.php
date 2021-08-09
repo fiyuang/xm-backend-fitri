@@ -75,11 +75,24 @@ class LoginController extends Controller
   
             if (Auth::check()) {
                 //Login Success
-                return redirect()->route('home');
+                if($user->user_type == 1){
+                    return redirect()->route('dashboard');
+                } else {
+                    if ($user->status == 1){
+                        return redirect()->route('complete.profile');
+                    } else {
+                        return redirect()->route('frontend.guru-list');
+                    }
+                }
             } else {
                 //Login Fail
-                Session::flash('error', 'Email atau password salah');
-                return redirect()->route('login');
+                if($user->user_type == 1){
+                    Session::flash('error', 'Email atau password salah');
+                    return redirect()->route('admin.login');
+                } else {
+                    Session::flash('error', 'Email atau password salah');
+                    return redirect()->route('login');
+                }    
             }
         // }
   

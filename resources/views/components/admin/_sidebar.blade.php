@@ -35,8 +35,8 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="{{ route('dashboard.guru') }}" class="nav-link">HR</a>
-                <a class="collapse-item" href="{{ route('dashboard.jobseeker') }}" class="nav-link">Jobseeker</a>
+                <a class="collapse-item" href="{{ route('dashboard.guru') }}" class="nav-link">Guru</a>
+                <a class="collapse-item" href="{{ route('dashboard.jobseeker') }}" class="nav-link">User</a>
             </div>
         </div>
     </li>

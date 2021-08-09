@@ -76,7 +76,7 @@ $(document).ready(function () {
                         } else {
                             Swal.fire({
                                 icon: 'success',
-                                title: 'Data berhasil disimpan',
+                                title: 'Jadwal berhasil dibuat!',
                                 showConfirmButton: true,
                             }).then(() => {
                                 location.reload(true);

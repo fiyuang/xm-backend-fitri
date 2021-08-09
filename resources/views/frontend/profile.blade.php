@@ -11,8 +11,8 @@
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-        <link href="css/sb-admin-2.min.css" rel="stylesheet">
+        <link href="../css/styles.css" rel="stylesheet" />
+        <link href="../css/sb-admin-2.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
@@ -68,84 +68,60 @@
         <!-- Product section-->
         <section class="py-5">
             <div class="container px-4 px-lg-5 my-5">
-                <div class="row gx-4 gx-lg-5 ">
-                    <div class="col-md-6">
-                        <img class="card-img-top mb-5 mb-md-0" src="https://dummyimage.com/600x1000/e0e0e0/8295ff&text=complete+the+profile" alt="..." />
-                    </div>
-                    <div class="col-md-6" style="background-color: whitesmoke; border-radius: 30px;">
-                        <div class="p-5">
+                <div class="row gx-4 gx-lg-5">
+                    <div class="col-md-8">
+                        <div>
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Complete Your Profile</h1>
-                            </div>
-                            <form method="POST" action="{{ route('complete.profile.store') }}" id="completeProfileForm" enctype="multipart/form-data">
-                                {{ csrf_field() }}    
-                                <div class="form-group">
-                                    <label for="user_type">Pilih Role Anda</label>
-                                        <select class="form-control" name="user_type" onchange="showDiv(this)">
-                                            <option value="" disabled selected> Pilih </option>
-                                            <option value="2">Guru</option>
-                                            <option value="3">User</option>
-                                        </select>
+                                <h1 class="h4 text-gray-900 mb-4">Detail of Your Profile</h1>
+                            </div>                   
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="name">Nama</label>
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ $data->name }}" disabled>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="name">Nama Lengkap</label>
-                                    <input id="name" type="name" class="form-control" name="name" value="{{ $user->name }}" placeholder="Enter your name...">
+                                <div class="col-md-6">
+                                    <label for="email">Email</label>
+                                    <input type="text" name="email" id="email" class="form-control" value="{{ $data->email }}" disabled>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="mobile_number">No Telepon</label>
-                                    <input type="text" name="mobile_number" id="mobile_number" class="form-control" value="" placeholder="contoh: 0878xxxx">
+                            </div><br> 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="name">Tanggal Lahir</label>
+                                    <input type="text" name="name" id="name" class="form-control" value="{{ $data->profile->birthdate }}" disabled>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="dob">Tanggal Lahir</label>
-                                    <input type="date" name="dob" id="dob" class="form-control">
+                                <div class="col-md-6">
+                                    <label for="mobile_number">No. Telepon</label>
+                                    <input type="text" name="mobile_number" id="mobile_number" class="form-control" value="{{ $data->profile->mobile_number }}" disabled>
                                 </div>
-      
-                                <div class="form-group">
-                                    <label for="profile_picture">Upload Profile Picture</label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="profile_picture" name="profile_picture">
-                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="mobile_number">Status</label>
+                                    <input type="text" name="status" id="status" class="form-control" value="{{ $data->status_formatted }}" disabled>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="name">CV</label>
+                                    <div class="border border-dashed rounded d-flex justify-content" style="background: #eaecf4; padding: 6px;">
+                                        &nbsp;<a href="{{ asset($data->cv->file_path) }}" target="_blank">{{ $data->cv->file_name }}</a>                       
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <label for="cv">Upload CV</label>
-                                    <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="cv" name="cv">
-                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                            </div><br>  
+                            @if($data->user_type == 2)
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="name">Tag</label>
+                                    <div class="border border-dashed rounded d-flex justify-content" style="background: #eaecf4; padding: 6px;">
+                                        @foreach ($data->trx_tag as $tag)
+                                        <span class="badge badge-info">{{ $tag->tag_name}}</span>  &nbsp;
+                                        @endforeach                            
                                     </div>
                                 </div>
-
-                                <!-- <div class="form-group">
-                                    <label for="dob">Tanggal</label>
-                                    <input type="text" name="calendar" id="calendar" class="form-control">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="time">Waktu</label>
-                                    <input type="text" name="waktu" id="waktu" class="form-control">
-                                </div> -->
-
-                                <div class="form-group" id="hidden_div" style="display:none;">
-                                    <label for="tags">Tags</label>
-                                    <div class="custom-file">
-                                        <select class="js-example-basic-multiple form-control" name="tags[]" id="tags" multiple="multiple" style="width: 100%">
-                                            @foreach ($tags as $tag)
-                                                <option value="{{ $tag->id }}"> {{ $tag->name }} </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>                          
-
-                                <hr>
-                                <button type="submit" class="btn btn-primary btn-user btn-block">
-                                    Submit
-                                </button>
-                            </form>
+                            </div> 
+                            @endif           
                         </div>
+                    </div>
+                    <div class="col-md-4">
+                        <img class="card-img-top mb-5 mb-md-0" src="{{ asset($data->profile->profile_picture) }}" alt="..." />
                     </div>
                 </div>
             </div>
@@ -184,32 +160,7 @@
         <script type="text/javascript">
             $(document).ready(function () {  
                 $('.js-example-basic-multiple').select2();
-
-                $("#calendar").datepicker({
-                    minDate: 1,
-                    beforeShowDay: $.datepicker.noWeekends
-                });
-
-                $("#waktu").timepicker({
-                    timeFormat: 'H:mm',
-                    interval: 30,
-                    minTime: '10',
-                    maxTime: '18:00',
-                    defaultTime: '12',
-                    startTime: '10:00',
-                    dynamic: false,
-                    dropdown: true,
-                    scrollbar: true
-                });
             })
-
-            function showDiv(select){
-                if(select.value==2){
-                    document.getElementById('hidden_div').style.display = "block";
-                } else{
-                    document.getElementById('hidden_div').style.display = "none";
-                }
-            } 
         </script>
 
     </body>

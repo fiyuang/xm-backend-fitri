@@ -36,9 +36,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $appends = [
+        'status_formatted',
+    ];
+
     public function profile()
     {
         return $this->hasOne('App\Profile');
+    }
+
+    public function schedule()
+    {
+        return $this->hasMany('App\Schedule');
     }
 
     public function trx_tag()
@@ -54,5 +63,32 @@ class User extends Authenticatable
     public function scopeUserOnly($query)
     {
         $query->where('user_type', 3);
+    }
+
+    public function getStatusFormattedAttribute()
+    {
+        $status = '';
+        switch ($this->status) {
+            case 1:
+                $status = 'Baru';
+                break;
+
+            case 2:
+                $status = 'Menunggu Direview';
+                break;
+
+            case 3:
+                $status = 'Approved';
+                break;
+
+            case 4:
+                $status = 'Ditolak';
+                break;
+                
+            default:
+                return $this->status;
+                break;
+        }
+        return $status;
     }
 }

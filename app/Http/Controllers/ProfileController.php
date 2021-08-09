@@ -21,6 +21,14 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function detail($id)
+    {
+        $data = User::with('profile','cv','trx_tag')->where('id', $id)->first();
+        return view('frontend.profile', [
+            'data' => $data,
+        ]);
+    }
+
     public function store(Request $request)
     {
         // $validator = \Validator::make($request->all(), 
@@ -72,12 +80,14 @@ class ProfileController extends Controller
             ]);
 
             // save tags of guru
-            for($i = 0; $i < count($request->tags); $i++){
-                $user->trx_tag()->updateOrCreate([
-                    'tag_id' => $request->tags[$i]
-                ]);
+            if($request->tags){
+                for($i = 0; $i < count($request->tags); $i++){
+                    $user->trx_tag()->updateOrCreate([
+                        'tag_id' => $request->tags[$i]
+                    ]);
+                }
             }
-
+            
             // Upload CV Document
             if($request->hasFile('cv')){
                 $cv = $this->uploadCV($request->file('cv'), 1);
@@ -88,18 +98,22 @@ class ProfileController extends Controller
             \DB::commit();
 
             if($user){
-                return response()->json([
-                    'data' => $user,
-                    'success'=> 'Data berhasil disimpan'
-                ]);
+                // return response()->json([
+                //     'data' => $user,
+                //     'success'=> 'Data berhasil disimpan'
+                // ]);
+                Alert::toast('Data berhasil disimpan', 'success')->padding('10px');
+                return redirect()->route('detail.profile', $user_id);
             }
 
         } catch (\Exception $e){
             \DB::rollback();
-            return response()->json([
-                'message' => $e->getMessage(),
-                'success'=> 'Error'
-            ]);
+            // return response()->json([
+            //     'message' => $e->getMessage(),
+            //     'success'=> 'Error'
+            // ]);
+            Alert::toast('Terjadi kesalahan', 'error')->padding('10px');
+            return redirect()->back();
         }
     }
 

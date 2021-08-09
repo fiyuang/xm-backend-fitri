@@ -20,14 +20,37 @@
                     <thead>
                         <tr>
                             <th>No.</th>
+                            <th>Nama User</th>
                             <th>Nama Guru</th>
+                            <th>Status</th>
+                            <th>Tanggal</th>
+                            <th>Waktu</th>                           
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @php $i = 1 @endphp
+                        @foreach ($schedules as $schedule)
                         <tr>
-                            <td>1</td>
-                            <td>Nama Panjang</td>
+                            <td>{{ $i++ }}</td>
+                            <td>{{ $schedule->talent->name }}</td>
+                            <td>{{ $schedule->guru->name }}</td>                          
+                            <td> 
+                                @if($schedule->is_approved == 1)
+                                    <span class="badge badge-pill badge-warning">Waiting</span>
+                                @elseif ($schedule->is_approved == 2)
+                                    <span class="badge badge-pill badge-success">Approved</span>
+                                @else
+                                    <span class="badge badge-pill badge-danger">Not Approved</span>
+                                @endif
+                            </td>
+                            <td>{{ $schedule->date }}</td>
+                            <td>{{ $schedule->time }}</td>
+                            <td><a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $schedule->id }}"
+                                    class="btn btn-primary btn-sm detail-patient ml-1"><i class="fas fa-eye fa-fw"></i>
+                                    Detail</a></td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -35,8 +58,6 @@
     </div>
 
 </div>
-
-@include('components/admin/_detail_patient')
 
 <!-- /.container-fluid -->
 @endsection

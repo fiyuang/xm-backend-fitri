@@ -14,16 +14,20 @@ class CreateSchedulesTable extends Migration
     public function up()
     {
         Schema::create('schedules', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('guru_id');
-            $table->timestamp('schedule_time')->nullable();
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('talent_id');
+            $table->unsignedBigInteger('guru_id');
+            $table->date('date')->nullable();
+            $table->time('time')->nullable();
             $table->string('notes')->nullable();
-            $table->tinyInteger('is_approved')->nullable();
+            $table->tinyInteger('is_approved')->nullable()->comment('1 => Waiting, 2 => Approved, 3 => Not Approved')->default(1);
             $table->text('approved_reason')->nullable();
             $table->tinyInteger('is_saved')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->foreign('talent_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('guru_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
