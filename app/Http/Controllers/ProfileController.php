@@ -21,9 +21,9 @@ class ProfileController extends Controller
         ]);
     }
 
-    public function detail($id)
+    public function detail()
     {
-        $data = User::with('profile','cv','trx_tag')->where('id', $id)->first();
+        $data = User::with('profile','cv','trx_tag')->where('id', \Auth::user()->id)->first();
         return view('frontend.profile', [
             'data' => $data,
         ]);
@@ -31,24 +31,27 @@ class ProfileController extends Controller
 
     public function store(Request $request)
     {
-        // $validator = \Validator::make($request->all(), 
-        //     [
-        //       'profile_picture' => 'required|mimes:jpeg,jpg,png|max:5120',
-        //       'cv' => 'required|mimes:pdf|max:5120',
-        //     ], [
-        //       'profile_picture.mimes' => 'Format file profile picture tidak sesuai',
-        //       'profile_picture.max' => 'Ukuran file maksimal 5 Mb',
-        //       'cv.mimes' => 'Format file CV tidak sesuai',
-        //       'cv.max' => 'Ukuran file maksimal 5 Mb',
-        //     ]
-        // );
+        $validator = \Validator::make($request->all(), 
+            [
+              'user_type' => 'required',
+              'name' => 'required',
+              'mobile_number' => 'required',
+              'dob' => 'required',
+              'profile_picture' => 'required|mimes:jpeg,jpg,png|max:5120',
+              'cv' => 'required|mimes:pdf|max:5120',
+            ], [
+              'profile_picture.mimes' => 'Format file profile picture tidak sesuai',
+              'profile_picture.max' => 'Ukuran file maksimal 5 Mb',
+              'cv.mimes' => 'Format file CV tidak sesuai',
+              'cv.max' => 'Ukuran file maksimal 5 Mb',
+            ]
+        );
         
-        // if ($validator->fails())
-        // {
-        //     return response()->json([
-        //         'errors'=>$validator->errors()->all()
-        //     ]);
-        // }
+        if ($validator->fails())
+        {
+            return redirect()->back()->withErrors($validator)->withInput($request->all());
+
+        }
 
         $user_id = \Auth::user()->id;
 

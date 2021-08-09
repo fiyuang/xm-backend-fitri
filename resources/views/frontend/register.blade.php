@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Our HR - XM Fitri</title>
+        <title>Our Guru - XM Fitri</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
@@ -27,7 +27,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/hr-list">Our HR</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/guru-list">Our Guru</a></li>
                     </ul>
                 </div>
                 <div class="d-flex">
@@ -86,21 +86,33 @@
                                             <option value="2">Guru</option>
                                             <option value="3">User</option>
                                         </select>
+                                        @if ($errors->has('user_type'))
+                                            <span class="text-danger">{{ $errors->first('user_type') }}</span>
+                                        @endif
                                 </div>
 
                                 <div class="form-group">
                                     <label for="name">Nama Lengkap</label>
                                     <input id="name" type="name" class="form-control" name="name" value="{{ $user->name }}" placeholder="Enter your name...">
+                                    @if ($errors->has('name'))
+                                        <span class="text-danger">{{ $errors->first('name') }}</span>
+                                    @endif
                                 </div>
 
                                 <div class="form-group">
                                     <label for="mobile_number">No Telepon</label>
                                     <input type="text" name="mobile_number" id="mobile_number" class="form-control" value="" placeholder="contoh: 0878xxxx">
+                                    @if ($errors->has('mobile_number'))
+                                        <span class="text-danger">{{ $errors->first('mobile_number') }}</span>
+                                    @endif
                                 </div>
 
                                 <div class="form-group">
                                     <label for="dob">Tanggal Lahir</label>
                                     <input type="date" name="dob" id="dob" class="form-control">
+                                    @if ($errors->has('dob'))
+                                        <span class="text-danger">{{ $errors->first('dob') }}</span>
+                                    @endif
                                 </div>
       
                                 <div class="form-group">
@@ -108,6 +120,9 @@
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="profile_picture" name="profile_picture">
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        @if ($errors->has('profile_picture'))
+                                            <span class="text-danger">{{ $errors->first('profile_picture') }}</span>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -116,6 +131,9 @@
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="cv" name="cv">
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        @if ($errors->has('cv'))
+                                            <span class="text-danger">{{ $errors->first('cv') }}</span>
+                                        @endif
                                     </div>
                                 </div>
 
@@ -138,6 +156,9 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                    @if ($errors->has('tags'))
+                                        <span class="text-danger">{{ $errors->first('tags') }}</span>
+                                    @endif
                                 </div>                          
 
                                 <hr>

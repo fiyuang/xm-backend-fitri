@@ -57,6 +57,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/complete-profile', 'ProfileController@index')->name('complete.profile');
     Route::post('/complete-profile', 'ProfileController@store')->name('complete.profile.store');
-    Route::get('/detail-profile/{id}', 'ProfileController@detail')->name('detail.profile');
+    Route::get('/detail-profile', 'ProfileController@detail')->name('detail.profile');
 });
 
