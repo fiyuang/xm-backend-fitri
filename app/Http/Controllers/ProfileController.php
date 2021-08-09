@@ -90,6 +90,12 @@ class ProfileController extends Controller
                     ]);
                 }
             }
+
+            if($request->user_type == 2){
+                $user->roles()->sync(2);
+            } else if ($request->user_type == 3){
+                $user->roles()->sync(3);
+            }
             
             // Upload CV Document
             if($request->hasFile('cv')){
@@ -106,7 +112,7 @@ class ProfileController extends Controller
                 //     'success'=> 'Data berhasil disimpan'
                 // ]);
                 Alert::toast('Data berhasil disimpan', 'success')->padding('10px');
-                return redirect()->route('detail.profile', $user_id);
+                return redirect()->route('detail.profile');
             }
 
         } catch (\Exception $e){
