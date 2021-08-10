@@ -9,15 +9,24 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 use File;
 
-class HRController extends Controller
+class TalentController extends Controller
 {
-    public function index() //Index of HR
+    public function index() //Index of Guru's List for booking schedule
     {
         $hrs = User::with('profile')->GuruOnly()->orderBy('id', 'DESC')->where('status', 3)->get();
         // $industries = Industry::get();
         // return $hrs;
         return view('frontend.guru-list', [
             'hrs' => $hrs,
+        ]);
+    }
+
+    public function list_schedule() //Index of Talent's Schedule
+    {
+        $schedules = Schedule::where('talent_id', \Auth::user()->id)->orderBy('id', 'DESC')->get();
+        // return $schedules;
+        return view('frontend.talent.schedule-list', [
+            'schedules' => $schedules,
         ]);
     }
 

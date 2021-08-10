@@ -36,13 +36,17 @@
                             <td>{{ $schedule->talent->name }}</td>
                             <td>{{ $schedule->guru->name }}</td>                          
                             <td> 
-                                @if($schedule->is_approved == 1)
-                                    <span class="badge badge-pill badge-warning">Waiting</span>
-                                @elseif ($schedule->is_approved == 2)
-                                    <span class="badge badge-pill badge-success">Approved</span>
-                                @else
-                                    <span class="badge badge-pill badge-danger">Not Approved</span>
-                                @endif
+                                        @if($schedule->is_approved == 1)
+                                            <span class="badge badge-pill badge-warning">Waiting</span>
+                                        @elseif ($schedule->is_approved == 2)
+                                            <span class="badge badge-pill badge-success">Approved</span>
+                                        @elseif ($schedule->is_approved == 3)
+                                            <span class="badge badge-pill badge-danger">Not Approved</span>
+                                        @elseif ($schedule->is_approved == 4)
+                                            <span class="badge badge-pill badge-success">Saved</span>
+                                        @else
+                                            <span class="badge badge-pill badge-danger">Decline</span>
+                                        @endif
                             </td>
                             <td>{{ $schedule->date }}</td>
                             <td>{{ $schedule->time }}</td>

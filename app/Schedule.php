@@ -8,6 +8,14 @@ class Schedule extends Model
 {
     protected $guarded = [];
 
+    protected $appends = [
+        'scheduledate'
+    ];
+
+    protected $dates = [
+        'date'
+    ];
+
     public function user()
     {
         return $this->belongsTo('App\User', 'user_id');
@@ -21,5 +29,10 @@ class Schedule extends Model
     public function talent()
     {
         return $this->belongsTo('App\User', 'talent_id');
+    }
+
+    public function getScheduledateAttribute()
+    {
+        return $this->date ? $this->date->format('d F Y') : '-';
     }
 }

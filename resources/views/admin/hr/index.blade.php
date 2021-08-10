@@ -12,13 +12,13 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">List HR</h6>
+            <h6 class="m-0 font-weight-bold text-primary">List Guru</h6>
         </div>
         <div class="card-body">
-            <a href="" class="btn btn-success btn-sm float-right" data-toggle="modal" data-target="#ModalFormHR"
+            <!-- <a href="" class="btn btn-success btn-sm float-right" data-toggle="modal" data-target="#ModalFormHR"
                 style="margin-bottom: 20px;">
-                <i class="fa fa-plus"></i>&nbsp; &nbsp; Tambah HR
-            </a>
+                <i class="fa fa-plus"></i>&nbsp; &nbsp; Tambah Guru
+            </a> -->
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>

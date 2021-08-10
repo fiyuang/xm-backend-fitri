@@ -40,7 +40,14 @@ class GoogleController extends Controller
                 Auth::login($finduser);
 
                 if ($finduser->status == 2 || $finduser->status == 3){
-                    return redirect('/guru-list');
+                    if ($finduser->user_type == 2){
+                        return redirect('/guru/schedule-list');
+                    } else if ($finduser->user_type == 3) {
+                        return redirect('/guru-list');
+                    } else {
+                        return redirect('/detail-profile');
+                    }
+                    
                 } else {
                     return redirect('/complete-profile');
                 }    

@@ -55,10 +55,18 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/complete-profile', 'ProfileController@index')->name('complete.profile');
     Route::post('/complete-profile', 'ProfileController@store')->name('complete.profile.store');
     Route::get('/detail-profile', 'ProfileController@detail')->name('detail.profile');
+    Route::get('/schedule/{id}/json','GuruController@scheduleJson');
+    Route::post('/update-schedule','GuruController@update_schedule')->name('frontend.update.schedule');
 
     Route::group(['middleware' => ['role:Talent']], function () {
-        Route::get('/guru-list','HRController@index')->name('frontend.guru-list');
-        Route::post('/create-schedule','HRController@create_schedule')->name('frontend.create.schedule');
+        Route::get('/guru-list','TalentController@index')->name('frontend.guru-list');
+        Route::post('/create-schedule','TalentController@create_schedule')->name('frontend.create.schedule');
+        Route::get('/user/schedule-list','TalentController@list_schedule')->name('frontend.user.schedule-list');
     });
+
+    Route::group(['middleware' => ['role:Guru']], function () {
+        Route::get('/guru/schedule-list','GuruController@index')->name('frontend.guru.schedule-list');
+    });
+
 });
 
