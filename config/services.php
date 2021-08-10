@@ -33,7 +33,8 @@ return [
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'http://localhost:1010/auth/google/callback',
+        // 'redirect' => 'http://localhost:1010/auth/google/callback',
+        'redirect' => 'http://secure-escarpment-12447.herokuapp.com/auth/google/callback',
     ],
 
 ];

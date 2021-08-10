@@ -18,7 +18,7 @@ Route::prefix('admin')->group(function() {
     Route::get('/login', 'Auth\LoginController@showFormLogin')->name('admin.login');
 
     // Need Auth
-    Route::group(['middleware' => ['role:admin'], 'auth'], function () {
+    Route::group(['middleware' => ['role:Admin'], 'auth'], function () {
         Route::get('/','DashboardController@index')->name('dashboard');
         // Route::get('/home', 'HomeController@index')->name('home');
 
@@ -56,7 +56,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/complete-profile', 'ProfileController@store')->name('complete.profile.store');
     Route::get('/detail-profile', 'ProfileController@detail')->name('detail.profile');
 
-    Route::group(['middleware' => ['role:talent']], function () {
+    Route::group(['middleware' => ['role:Talent']], function () {
         Route::get('/guru-list','HRController@index')->name('frontend.guru-list');
         Route::post('/create-schedule','HRController@create_schedule')->name('frontend.create.schedule');
     });
