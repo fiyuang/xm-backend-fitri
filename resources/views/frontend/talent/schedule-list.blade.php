@@ -175,7 +175,7 @@
 
                             <div class="form-group">
                                 <label for="name">Apporved Reason</label>
-                                <textarea name="approved_reason" id="approved_reason" class="form-control" value="" disabled></textarea>
+                                <textarea name="approved_reason" id="approved_reason" class="form-control" value="" readonly></textarea>
                             </div>
 
                             <div class="form-group">

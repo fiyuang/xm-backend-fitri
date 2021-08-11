@@ -9,6 +9,9 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 use File;
 use App\Jobs\BookEmailJob;
+use Spatie\GoogleCalendar\Event;
+use DateTime;
+use Carbon\Carbon;
 
 class GuruController extends Controller
 {
@@ -48,17 +51,32 @@ class GuruController extends Controller
                     'approved_reason' => $request->approved_reason
                 ]);
 
-                // Details for email variable
-                $details['type'] = 'ScheduleApproved';
-                $details['user_email'] = $user->email;
-                $details['user_name'] = $user->name;
-                $details['guru_name'] = $guru->name;
-                $details['schedule_date'] = ($schedule->date)->format('d F Y');
-                $details['schedule_time'] = $schedule->time;
-                $details['is_approved'] = $request->is_approved;
-                $details['approved_reason'] = $request->approved_reason ? $request->approved_reason : '-';
-                dispatch(new BookEmailJob($details));
-    
+                if($request->is_approved == 2 || $request->is_approved == 3){
+                     // Details for email variable
+                    $details['type'] = 'ScheduleApproved';
+                    $details['user_email'] = $user->email;
+                    $details['user_name'] = $user->name;
+                    $details['guru_name'] = $guru->name;
+                    $details['schedule_date'] = ($schedule->date)->format('d F Y');
+                    $details['schedule_time'] = $schedule->time;
+                    $details['is_approved'] = $request->is_approved;
+                    $details['approved_reason'] = $request->approved_reason ? $request->approved_reason : '-';
+                    dispatch(new BookEmailJob($details));
+                }
+
+                if ($request->is_approved == 4) {
+                    //create a new event
+                    $event = new Event;
+
+                    $date = ($schedule->date)->format('Y-m-d');
+
+                    $event->name = "Schedule with " . $user->name . " and " . $guru->name;
+                    $event->startDateTime = Carbon::parse($date . ' '. $schedule->time, 'Asia/Jakarta');
+                    $event->endDateTime = Carbon::parse($date . ' '. $schedule->time, 'Asia/Jakarta')->addMinute(30);
+
+                    $event->save();
+                }
+
                 \DB::commit();
 
                 if($update_schedule){
