@@ -249,7 +249,6 @@
                                 processData: false,  // Important!
                                 dataType: 'json',
                                 success: function (data) {
-                                    console.log(data);
                                     if(data.errors){
 
                                         jQuery('.alert-danger').html('');

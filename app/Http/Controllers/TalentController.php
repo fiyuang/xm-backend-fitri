@@ -8,6 +8,7 @@ use App\Schedule;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 use File;
+use App\Jobs\BookEmailJob;
 
 class TalentController extends Controller
 {
@@ -49,6 +50,10 @@ class TalentController extends Controller
             ]);
         }
 
+        //details of guru and user
+        $guru = User::where('id', $request->guru_id)->first();
+        $user = User::where('id', \Auth::user()->id)->first();
+
         $schedule = Schedule::where('guru_id', $request->guru_id)->where('date', $request->schedule_date)->where('time', $request->schedule_time)->first();
         if(isset($schedule)){
             return response()->json([
@@ -67,9 +72,15 @@ class TalentController extends Controller
                     'notes' => $request->notes,
                     'is_approved' => 1
                 ]);
+
+                // Details for email variable
+                $details['guru_email'] = $guru->email;
+                $details['guru_name'] = $guru->name;
+                $details['user_name'] = $user->name;
+                dispatch(new BookEmailJob($details));
     
                 \DB::commit();
-
+                             
                 if($create_schedule){
                     return response()->json([
                         'message' => 'Jadwal berhasil disimpan',
