@@ -20,9 +20,8 @@ class CreateSchedulesTable extends Migration
             $table->date('date')->nullable();
             $table->time('time')->nullable();
             $table->string('notes')->nullable();
-            $table->tinyInteger('is_approved')->nullable()->comment('1 => Waiting, 2 => Approved, 3 => Not Approved')->default(1);
+            $table->tinyInteger('is_approved')->nullable()->comment('1 => Waiting, 2 => Approved, 3 => Not Approved, 4 => Saved, 5 => Decline')->default(1);
             $table->text('approved_reason')->nullable();
-            $table->tinyInteger('is_saved')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

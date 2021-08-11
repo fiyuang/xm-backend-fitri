@@ -74,9 +74,12 @@ class TalentController extends Controller
                 ]);
 
                 // Details for email variable
+                $details['type'] = 'NewSchedule';
                 $details['guru_email'] = $guru->email;
                 $details['guru_name'] = $guru->name;
                 $details['user_name'] = $user->name;
+                $details['schedule_date'] = ($request->schedule_date)->format('d F Y');
+                $details['schedule_time'] = $request->schedule_time;
                 dispatch(new BookEmailJob($details));
     
                 \DB::commit();

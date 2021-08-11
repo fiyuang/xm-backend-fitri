@@ -8,6 +8,7 @@ use App\Schedule;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 use File;
+use App\Jobs\BookEmailJob;
 
 class GuruController extends Controller
 {
@@ -36,6 +37,8 @@ class GuruController extends Controller
     {
 
         $schedule = Schedule::where('id', $request->schedule_id)->first();
+        $user = User::where('id', $schedule->talent_id)->first();
+        $guru = User::where('id', $schedule->guru_id)->first();
 
         \DB::beginTransaction();
             try {
@@ -44,6 +47,17 @@ class GuruController extends Controller
                     'is_approved' => $request->is_approved,
                     'approved_reason' => $request->approved_reason
                 ]);
+
+                // Details for email variable
+                $details['type'] = 'ScheduleApproved';
+                $details['user_email'] = $user->email;
+                $details['user_name'] = $user->name;
+                $details['guru_name'] = $guru->name;
+                $details['schedule_date'] = ($schedule->date)->format('d F Y');
+                $details['schedule_time'] = $schedule->time;
+                $details['is_approved'] = $request->is_approved;
+                $details['approved_reason'] = $request->approved_reason ? $request->approved_reason : '-';
+                dispatch(new BookEmailJob($details));
     
                 \DB::commit();
 

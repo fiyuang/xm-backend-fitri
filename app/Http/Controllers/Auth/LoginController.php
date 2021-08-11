@@ -81,7 +81,11 @@ class LoginController extends Controller
                     if ($user->status == 1){
                         return redirect()->route('complete.profile');
                     } else {
-                        return redirect()->route('frontend.guru-list');
+                        if($user->user_type == 2){
+                            return redirect()->route('frontend.guru.schedule-list');
+                        } else if ($user->user_type == 3){
+                            return redirect()->route('frontend.guru-list');
+                        }
                     }
                 }
             } else {
