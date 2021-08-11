@@ -9,6 +9,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Hash;
 use File;
 use App\Jobs\BookEmailJob;
+use Carbon\Carbon;
 
 class TalentController extends Controller
 {
@@ -73,12 +74,15 @@ class TalentController extends Controller
                     'is_approved' => 1
                 ]);
 
+                $date_format = Carbon::parse($request->schedule_date);
+                $date = $date_format->format('d F Y');
+
                 // Details for email variable
                 $details['type'] = 'NewSchedule';
                 $details['guru_email'] = $guru->email;
                 $details['guru_name'] = $guru->name;
                 $details['user_name'] = $user->name;
-                $details['schedule_date'] = ($request->schedule_date)->format('d F Y');
+                $details['schedule_date'] = $date;
                 $details['schedule_time'] = $request->schedule_time;
                 dispatch(new BookEmailJob($details));
     

@@ -53,11 +53,14 @@ class GuruController extends Controller
 
                 if($request->is_approved == 2 || $request->is_approved == 3){
                      // Details for email variable
+                    $date_format = Carbon::parse($schedule->date);
+                    $date = $date_format->format('d F Y');
+
                     $details['type'] = 'ScheduleApproved';
                     $details['user_email'] = $user->email;
                     $details['user_name'] = $user->name;
                     $details['guru_name'] = $guru->name;
-                    $details['schedule_date'] = ($schedule->date)->format('d F Y');
+                    $details['schedule_date'] = $date;
                     $details['schedule_time'] = $schedule->time;
                     $details['is_approved'] = $request->is_approved;
                     $details['approved_reason'] = $request->approved_reason ? $request->approved_reason : '-';
