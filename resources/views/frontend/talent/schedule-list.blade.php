@@ -120,11 +120,14 @@
                                     <td>{{ $schedule->time }}</td>
 
                                     <td>
-                                        @if ($schedule->is_approved == 4)
+                                        @if ($schedule->is_approved == 1 || $schedule->is_approved == 3 || $schedule->is_approved == 4 || $schedule->is_approved == 5)
                                             <a class="btn btn-primary btn-sm ml-1 disabled"> Detail</a>
                                         @else
                                             <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $schedule->id }}" class="btn btn-primary btn-sm update-schedule ml-1"> Detail</a>
                                         @endif
+                                        <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $schedule->id }}"
+                                            class="btn btn-warning btn-sm log-activity ml-1">
+                                            Log</a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -141,7 +144,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Detail Schedule</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -200,6 +203,7 @@
         </div>
 
         <!-- Logout Modal-->
+        @include('frontend/_log_schedule')
         @include('components/admin/_logout')
         @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
         <!-- Footer-->
@@ -325,6 +329,31 @@
                         }
                     });
                 }
+
+                $('body').on('click', '.log-activity', function () {
+                    $('#logActivityModal').modal('show');
+                    var id = $(this).data("id");
+                    $('.tablelogactivity').DataTable({
+                        destroy: true,
+                        processing: true,
+                        serverSide: true,
+                        ajax: {
+                            url: "/schedule/"+id+"/log-activity"
+                        },
+                        columns: [
+                            {
+                                data: 'DT_RowIndex', name: 'DT_RowIndex', 
+                                orderable: false, searchable: false,  width: '5%'
+                            },
+                            {data: 'causer.name', name: 'causer.name', class:'text-center', width: '18%', },                         
+                            {data: 'description', name: 'description', class:'text-center', width: '12%', },
+                            {data: 'status_before', name: 'status_before', class:'text-center',  width: '17%', },
+                            {data: 'status_after', name: 'status_after', class:'text-center',  width: '15%',},
+                            {data: 'reason', name: 'reason', class:'text-center',  width: '10%',},
+                            {data: 'created_at', name: 'created_at', class:'text-center',  width: '20%',},
+                        ]    
+                    });
+                });
             })
         </script>
 

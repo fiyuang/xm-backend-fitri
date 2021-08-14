@@ -100,7 +100,7 @@
                                 </button>
                                 <hr>
                                 <a href="{{ url('auth/google') }}" class="btn btn-google btn-user btn-block">
-                                    <i class="fa fa-google"></i> Login with Google
+                                    <i class="fa fa-google"></i> Register with Google
                                 </a>
                             </form>
                             <hr>

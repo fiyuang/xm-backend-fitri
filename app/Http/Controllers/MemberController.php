@@ -21,6 +21,16 @@ class MemberController extends Controller
         ]);
     }
 
+    public function user() //Index of User
+    {
+        $jobseekers = User::UserOnly()->orderBy('id', 'DESC')->get();
+        $tags = Tag::get();
+        return view('admin.jobseeker.index', [
+            'jobseekers' => $jobseekers,
+            'tags' => $tags
+        ]);
+    }
+
     public function detailGuruJson($id)
     {
         $data = User::with('profile','cv','trx_tag')->where('id', $id)->first();

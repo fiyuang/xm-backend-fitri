@@ -62,11 +62,11 @@ class ProfileController extends Controller
             if($request->hasFile('profile_picture')){
                 $image   = $request->file('profile_picture');
                 $filename = 'profile_picture' . '-' . time() . '.' . $image->getClientOriginalExtension();
-                $path = public_path('documents/guru/profile');
+                $path = public_path('documents/profile');
                     if(!File::isDirectory($path)){
                         File::makeDirectory($path, 0777, true, true);
                     }
-                $filepath = 'documents/guru/profile';
+                $filepath = 'documents/profile';
                 $save = $image->move($path, $filename);
             }
 
@@ -129,11 +129,11 @@ class ProfileController extends Controller
     public function uploadCV($data, $type)
     {
         $filename = 'cv' . '-' . time() . '.' . $data->getClientOriginalExtension();
-        $path = public_path('documents/guru/CV');
+        $path = public_path('documents/CV');
             if(!File::isDirectory($path)){
                 File::makeDirectory($path, 0777, true, true);
             }
-        $filepath = 'documents/guru/CV/'.$filename;
+        $filepath = 'documents/CV/'.$filename;
         $save = $data->move($path, $filename);
 
         return [

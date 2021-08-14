@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Models\Activity;
 
 class Schedule extends Model
 {
@@ -29,6 +30,11 @@ class Schedule extends Model
     public function talent()
     {
         return $this->belongsTo('App\User', 'talent_id');
+    }
+
+    public function activities()
+    {
+        return $this->morphMany(Activity::class, 'subject')->orderBy('id', 'desc');
     }
 
     public function getScheduledateAttribute()

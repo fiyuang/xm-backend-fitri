@@ -36,7 +36,7 @@ Route::prefix('admin')->group(function() {
             Route::get('/{id}/guru','MemberController@detail')->name('guru.detail');
             Route::post('/guru/update','MemberController@update_status')->name('guru.update');
     
-            Route::get('/jobseeker','MemberController@jobseekers')->name('dashboard.jobseeker');
+            Route::get('/user','MemberController@user')->name('dashboard.user');
         });
     });  
 });
@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/detail-profile', 'ProfileController@detail')->name('detail.profile');
     Route::get('/schedule/{id}/json','GuruController@scheduleJson');
     Route::post('/update-schedule','GuruController@update_schedule')->name('frontend.update.schedule');
+    Route::get('/schedule/{id}/log-activity', 'GuruController@scheduleActivityLog')->name('schedule.activitiLog');
 
     Route::group(['middleware' => ['role:Talent']], function () {
         Route::get('/guru-list','TalentController@index')->name('frontend.guru-list');

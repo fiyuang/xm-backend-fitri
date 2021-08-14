@@ -77,6 +77,11 @@ class TalentController extends Controller
                 $date_format = Carbon::parse($request->schedule_date);
                 $date = $date_format->format('d F Y');
 
+                // Add activity log
+                activity('user-status')
+                ->performedOn($create_schedule)
+                ->log('Dibuat');
+
                 // Details for email variable
                 $details['type'] = 'NewSchedule';
                 $details['guru_email'] = $guru->email;
@@ -84,7 +89,7 @@ class TalentController extends Controller
                 $details['user_name'] = $user->name;
                 $details['schedule_date'] = $date;
                 $details['schedule_time'] = $request->schedule_time;
-                dispatch(new BookEmailJob($details));
+                // dispatch(new BookEmailJob($details));
     
                 \DB::commit();
                              

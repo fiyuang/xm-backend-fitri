@@ -37,15 +37,15 @@
                             <td>{{ $hr->name }}</td>
                             <td>{{ $hr->email }}</td>
                             <td>
-                              <button type="button" class="btn btn-danger btn-sm"
-                                    data-toggle="modal"
-                                    data-target="#remove-data-popup"
-                                    data-action=""
-                                  >
-                                  <i class="fas fa-trash"></i>
-                                  Hapus
-                              </button>
-                              <a href="{{ route('guru.detail',$hr->id) }}" class="btn btn-primary btn-sm ml-1"><i class="fas fa-eye fa-fw"></i> Detail</a>
+                                <a href="{{ route('guru.detail',$hr->id) }}" class="btn btn-primary btn-sm ml-1"><i class="fas fa-eye fa-fw"></i> Detail</a>
+                                <button type="button" class="btn btn-danger btn-sm"
+                                        data-toggle="modal"
+                                        data-target="#remove-data-popup"
+                                        data-action=""
+                                    >
+                                    <i class="fas fa-trash"></i>
+                                    Hapus
+                                </button>                             
                             </td>
                         </tr>
                         @endforeach

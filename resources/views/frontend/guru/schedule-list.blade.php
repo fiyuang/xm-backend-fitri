@@ -20,6 +20,13 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
         <link href="{{ asset('vendor/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet">
 
+        <style>
+            a.disabled {
+                pointer-events: none;
+                cursor: default;
+            }
+        </style>
+
     </head>
     <body>
         <!-- Navigation-->
@@ -111,9 +118,16 @@
                                     </td>
                                     <td>{{ $schedule->scheduledate }}</td>
                                     <td>{{ $schedule->time }}</td>
-                                    <td><a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $schedule->id }}"
-                                            class="btn btn-primary btn-sm update-schedule ml-1">
-                                            Detail</a></td>
+                                    <td>
+                                        @if ($schedule->is_approved == 4 || $schedule->is_approved == 5)
+                                            <a class="btn btn-primary btn-sm ml-1 disabled"> Detail</a>
+                                        @else
+                                            <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $schedule->id }}" class="btn btn-primary btn-sm update-schedule ml-1"> Detail</a>
+                                        @endif
+                                        <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $schedule->id }}"
+                                            class="btn btn-warning btn-sm log-activity ml-1">
+                                            Log</a>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -129,7 +143,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Detail Schedule</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -181,7 +195,7 @@
                                 <label for="name">Status</label>
                                 <select class="form-control" id="is_approved" name="is_approved" style="width: 100%;">
                                     <option value="" disabled selected>Pilih</option>
-                                    <option value="1">Waiting</option>
+                                    <option value="1" disabled selected>Waiting</option>
                                     <option value="2">Approved</option>
                                     <option value="3">Not Approved</option>
                                 </select>
@@ -201,6 +215,7 @@
         </div>
 
         <!-- Logout Modal-->
+        @include('frontend/_log_schedule')
         @include('components/admin/_logout')
         @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
         <!-- Footer-->
@@ -249,10 +264,12 @@
                     $.get('/schedule/' + id + '/json', function (data) {
                         console.log(data)
 
+                        var cv_path = "/" + data.talent.cv.file_path;
+
                         $('#user_name').val(data.talent.name);
                         $('#user_email').val(data.talent.email);
                         $('#user_number').val(data.talent.profile.mobile_number);
-                        $(".userCV").attr("href",data.talent.cv.file_path);
+                        $(".userCV").attr("href",cv_path);
                         $("#notes").val(data.notes);
                         $('#schedule_date').val(data.scheduledate);
                         $('#schedule_time').val(data.time);
@@ -328,6 +345,31 @@
                         }
                     });
                 }
+
+                $('body').on('click', '.log-activity', function () {
+                    $('#logActivityModal').modal('show');
+                    var id = $(this).data("id");
+                    $('.tablelogactivity').DataTable({
+                        destroy: true,
+                        processing: true,
+                        serverSide: true,
+                        ajax: {
+                            url: "/schedule/"+id+"/log-activity"
+                        },
+                        columns: [
+                            {
+                                data: 'DT_RowIndex', name: 'DT_RowIndex', 
+                                orderable: false, searchable: false,  width: '5%'
+                            },
+                            {data: 'causer.name', name: 'causer.name', class:'text-center', width: '18%', },                         
+                            {data: 'description', name: 'description', class:'text-center', width: '12%', },
+                            {data: 'status_before', name: 'status_before', class:'text-center',  width: '17%', },
+                            {data: 'status_after', name: 'status_after', class:'text-center',  width: '15%',},
+                            {data: 'reason', name: 'reason', class:'text-center',  width: '10%',},
+                            {data: 'created_at', name: 'created_at', class:'text-center',  width: '20%',},
+                        ]    
+                    });
+                });
             })
         </script>
 
