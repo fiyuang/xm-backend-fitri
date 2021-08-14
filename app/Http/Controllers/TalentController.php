@@ -89,7 +89,7 @@ class TalentController extends Controller
                 $details['user_name'] = $user->name;
                 $details['schedule_date'] = $date;
                 $details['schedule_time'] = $request->schedule_time;
-                // dispatch(new BookEmailJob($details));
+                dispatch(new BookEmailJob($details));
     
                 \DB::commit();
                              

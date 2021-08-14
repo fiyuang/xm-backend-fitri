@@ -74,7 +74,7 @@ class GuruController extends Controller
                     $details['schedule_time'] = $schedule->time;
                     $details['is_approved'] = $request->is_approved;
                     $details['approved_reason'] = $request->approved_reason ? $request->approved_reason : '-';
-                    // dispatch(new BookEmailJob($details));
+                    dispatch(new BookEmailJob($details));
 
                 } else if ($request->is_approved == 4) {
 
