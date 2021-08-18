@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Schedule;
@@ -17,72 +18,27 @@ class DashboardController extends Controller
     {
         $schedules = Schedule::orderBy('id', 'DESC')->get();
         // dd($schedules);
-        return view('admin.dashboard', [
+        return view('admin.dashboard.index', [
             'schedules' => $schedules
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function detail($id)
     {
-        //
+        $data = Schedule::with('guru', 'talent')->where('id', $id)->first();
+        $activities = $data->activities->load('causer');
+        // return $activities;
+        return view('admin.dashboard.detail', [
+            'data' => $data,
+            'activities' => $activities
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

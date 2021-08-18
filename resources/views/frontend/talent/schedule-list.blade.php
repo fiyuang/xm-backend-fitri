@@ -116,7 +116,7 @@
                                             <span class="badge badge-pill badge-danger">Decline</span>
                                         @endif
                                     </td>
-                                    <td>{{ $schedule->scheduledate }}</td>
+                                    <td>{{ $schedule->date_formatted }}</td>
                                     <td>{{ $schedule->time }}</td>
 
                                     <td>
@@ -255,7 +255,7 @@
                         $('#guru_name').val(data.guru.name);
                         $('#guru_email').val(data.guru.email);
                         $("#notes").val(data.notes);
-                        $('#schedule_date').val(data.scheduledate);
+                        $('#schedule_date').val(data.date_formatted);
                         $('#schedule_time').val(data.time);
                         $("#is_approved").val(data.is_approved);
                         $("#approved_reason").val(data.approved_reason);

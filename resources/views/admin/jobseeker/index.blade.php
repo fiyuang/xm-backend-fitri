@@ -32,7 +32,7 @@
                             <td>{{ $i++ }}</td>
                             <td>{{ $jobseeker->name }}</td>
                             <td>{{ $jobseeker->email }}</td>
-                            <td><a href="{{ route('guru.detail',$jobseeker->id) }}" class="btn btn-primary btn-sm ml-1"><i class="fas fa-eye fa-fw"></i> Detail</a></td>
+                            <td><a href="{{ route('user.detail',$jobseeker->id) }}" class="btn btn-primary btn-sm ml-1"><i class="fas fa-eye fa-fw"></i> Detail</a></td>
                         </tr>
                         @endforeach
                     </tbody>

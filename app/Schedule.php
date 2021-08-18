@@ -10,7 +10,8 @@ class Schedule extends Model
     protected $guarded = [];
 
     protected $appends = [
-        'scheduledate'
+        'date_formatted',
+        'status_formatted'
     ];
 
     protected $dates = [
@@ -37,8 +38,39 @@ class Schedule extends Model
         return $this->morphMany(Activity::class, 'subject')->orderBy('id', 'desc');
     }
 
-    public function getScheduledateAttribute()
+    public function getDateFormattedAttribute()
     {
         return $this->date ? $this->date->format('d F Y') : '-';
+    }
+
+    public function getStatusFormattedAttribute()
+    {
+        $status = '';
+        switch ($this->is_approved) {
+            case 1:
+                $status = 'Waiting';
+                break;
+
+            case 2:
+                $status = 'Approved';
+                break;
+
+            case 3:
+                $status = 'Not Approved';
+                break;
+
+            case 4:
+                $status = 'Saved';
+                break;
+
+            case 5:
+                $status = 'Decline';
+                break;
+                
+            default:
+                return $this->is_approved;
+                break;
+        }
+        return $status;
     }
 }

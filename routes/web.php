@@ -27,16 +27,18 @@ Route::prefix('admin')->group(function() {
     Route::group(['middleware' => ['role:Admin'], 'auth'], function () {
         Route::get('/','DashboardController@index')->name('dashboard');
         // Route::get('/home', 'HomeController@index')->name('home');
+        Route::get('/{id}/schedule','DashboardController@detail')->name('schedule.detail');
 
         Route::prefix('members')->group(function() {
             Route::get('/guru','MemberController@guru')->name('dashboard.guru');
             Route::post('/store/guru','MemberController@create_guru')->name('guru.store');
-            Route::post('/delete/guru/{id}','MemberController@delete_guru')->name('guru.destroy');
             Route::get('/guru/{id}/json','MemberController@detailGuruJson');
-            Route::get('/{id}/guru','MemberController@detail')->name('guru.detail');
+            Route::get('/{id}/guru','MemberController@detail_guru')->name('guru.detail');
             Route::post('/guru/update','MemberController@update_status')->name('guru.update');
     
             Route::get('/user','MemberController@user')->name('dashboard.user');
+            Route::get('/{id}/user','MemberController@detail_user')->name('user.detail');
+            Route::post('/delete/{id}','MemberController@delete')->name('user.destroy');
         });
     });  
 });

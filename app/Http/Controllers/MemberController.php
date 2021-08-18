@@ -37,11 +37,20 @@ class MemberController extends Controller
         return response()->json($data);
     }
 
-    public function detail($id)
+    public function detail_guru($id)
     {
         $data = User::with('profile','cv','trx_tag')->where('id', $id)->first();
         // return $data;
         return view('admin.hr.detail', [
+            'data' => $data
+        ]);
+    }
+
+    public function detail_user($id)
+    {
+        $data = User::with('profile','cv')->where('id', $id)->first();
+        // return $data;
+        return view('admin.jobseeker.detail', [
             'data' => $data
         ]);
     }
@@ -179,7 +188,7 @@ class MemberController extends Controller
         ];
     }
 
-    public function delete_hr($id)
+    public function delete($id)
     {
         User::where('id', $id)->forceDelete();
         Alert::toast('Data berhasil dihapus', 'success')->padding('10px')->timerProgressBar();

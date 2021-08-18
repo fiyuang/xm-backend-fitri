@@ -48,11 +48,12 @@
                                             <span class="badge badge-pill badge-danger">Decline</span>
                                         @endif
                             </td>
-                            <td>{{ $schedule->date }}</td>
+                            <td>{{ $schedule->date_formatted }}</td>
                             <td>{{ $schedule->time }}</td>
-                            <td><a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $schedule->id }}"
-                                    class="btn btn-primary btn-sm detail-patient ml-1"><i class="fas fa-eye fa-fw"></i>
-                                    Detail</a></td>
+                            <td>
+                                <a href="{{ route('schedule.detail',$schedule->id) }}" class="btn btn-primary btn-sm ml-1"><i class="fas fa-eye fa-fw"></i> Detail</a>
+                                <a href="javascript:void(0)" data-toggle="tooltip" data-id="{{ $schedule->id }}" class="btn btn-warning btn-sm log-activity ml-1"> Log</a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -63,29 +64,38 @@
 
 </div>
 
+@include('admin/dashboard/_log_schedule')
+
 <!-- /.container-fluid -->
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
     $(document).ready(function () {
-        $('body').on('click', '.detail-patient', function () {
-            var id = $(this).data('id');
-            $.get('patient/' + id + '/json', function (data) {
-                console.log(data)
-
-                var datetime_appointment = (data.date) + ", " + (data.time)
-
-                $('.name').html(data.patient.name);
-                $('.mobile_number').html(data.patient.mobile_number);
-                $('.dob').html(data.patient.date_of_birth);
-                $('.doctor').html(data.doctor.name);
-                $('.datetime_appointment').html(datetime_appointment);
-                $('.notes').html(data.notes);
-
-                $('#detail-patient').modal('show');
-            });
-        });
+        $('body').on('click', '.log-activity', function () {
+                    $('#logActivityModal').modal('show');
+                    var id = $(this).data("id");
+                    $('.tablelogactivity').DataTable({
+                        destroy: true,
+                        processing: true,
+                        serverSide: true,
+                        ajax: {
+                            url: "/schedule/"+id+"/log-activity"
+                        },
+                        columns: [
+                            {
+                                data: 'DT_RowIndex', name: 'DT_RowIndex', 
+                                orderable: false, searchable: false,  width: '5%'
+                            },
+                            {data: 'causer.name', name: 'causer.name', class:'text-center', width: '18%', },                         
+                            {data: 'description', name: 'description', class:'text-center', width: '12%', },
+                            {data: 'status_before', name: 'status_before', class:'text-center',  width: '17%', },
+                            {data: 'status_after', name: 'status_after', class:'text-center',  width: '15%',},
+                            {data: 'reason', name: 'reason', class:'text-center',  width: '10%',},
+                            {data: 'created_at', name: 'created_at', class:'text-center',  width: '20%',},
+                        ]    
+                    });
+                });
     })
 
 </script>

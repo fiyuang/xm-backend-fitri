@@ -24,8 +24,9 @@
                     <thead>
                         <tr>
                             <th width="10%">No.</th>
-                            <th width="35%">Nama</th>
-                            <th width="35%">Email</th>
+                            <th width="25%">Nama</th>
+                            <th width="25%">Email</th>
+                            <th width="20%">Status</th>
                             <th width="20%">Action</th>
                         </tr>
                     </thead>
@@ -36,16 +37,29 @@
                             <td>{{ $i++ }}</td>
                             <td>{{ $hr->name }}</td>
                             <td>{{ $hr->email }}</td>
+                            <td> 
+                                @if($hr->status == 1)
+                                    <span class="badge badge-pill badge-primary">Baru</span>
+                                @elseif ($hr->status == 2)
+                                    <span class="badge badge-pill badge-warning">Menunggu Direview</span>
+                                @elseif ($hr->status == 3)
+                                    <span class="badge badge-pill badge-success">Approved</span>
+                                @elseif ($hr->status == 4)
+                                    <span class="badge badge-pill badge-danger">Ditolak</span>
+                                @else
+                                    <span class="badge badge-pill badge-danger">Other</span>
+                                @endif
+                            </td>
                             <td>
                                 <a href="{{ route('guru.detail',$hr->id) }}" class="btn btn-primary btn-sm ml-1"><i class="fas fa-eye fa-fw"></i> Detail</a>
-                                <button type="button" class="btn btn-danger btn-sm"
+                                <!-- <button type="button" class="btn btn-danger btn-sm"
                                         data-toggle="modal"
                                         data-target="#remove-data-popup"
-                                        data-action=""
+                                        data-action="{{ route('user.destroy', ['id' => $hr->id]) }}"
                                     >
                                     <i class="fas fa-trash"></i>
                                     Hapus
-                                </button>                             
+                                </button>                              -->
                             </td>
                         </tr>
                         @endforeach

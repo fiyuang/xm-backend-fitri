@@ -116,7 +116,7 @@
                                             <span class="badge badge-pill badge-danger">Decline</span>
                                         @endif
                                     </td>
-                                    <td>{{ $schedule->scheduledate }}</td>
+                                    <td>{{ $schedule->date_formatted }}</td>
                                     <td>{{ $schedule->time }}</td>
                                     <td>
                                         @if ($schedule->is_approved == 4 || $schedule->is_approved == 5)
@@ -271,7 +271,7 @@
                         $('#user_number').val(data.talent.profile.mobile_number);
                         $(".userCV").attr("href",cv_path);
                         $("#notes").val(data.notes);
-                        $('#schedule_date').val(data.scheduledate);
+                        $('#schedule_date').val(data.date_formatted);
                         $('#schedule_time').val(data.time);
                         $("#is_approved").val(data.is_approved);
                         $("#approved_reason").val(data.approved_reason);
